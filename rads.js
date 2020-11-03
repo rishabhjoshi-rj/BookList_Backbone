@@ -24,8 +24,8 @@ var BookView = Backbone.View.extend({
     "click .delete-blog": "delete",
   },
 
-  delete: function () {
-    this.model.destroy();
+  delete: function (e) {
+    e.target.parentElement.parentElement.remove();
   },
   render: function () {
     this.$el.html(this.template(this.model.toJSON()));
