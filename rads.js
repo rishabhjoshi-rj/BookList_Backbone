@@ -22,6 +22,44 @@ var BookView = Backbone.View.extend({
   },
   events: {
     "click .delete-blog": "delete",
+    "click .edit-blog": "edit",
+    "click .update-blog": "update",
+    "click .done": "done",
+  },
+  edit: function () {
+    $(".edit-blog").hide();
+    $(".delete-blog").hide();
+    this.$(".update-blog").show();
+    this.$(".done").show();
+
+    var author = this.$(".author").html();
+    var title = this.$(".title").html();
+    var isbn = this.$(".isbn").html();
+
+    this.$(".author").html(
+      '<input type="text" class="form-control author-update" value="' +
+        author +
+        '">'
+    );
+    this.$(".title").html(
+      '<input type="text" class="form-control title-update" value="' +
+        title +
+        '">'
+    );
+    this.$(".isbn").html(
+      '<input type="text" class="form-control isbn-update" value="' +
+        isbn +
+        '">'
+    );
+  },
+  update: function () {
+    this.model.set("author", $(".author-update").val());
+    this.model.set("title", $(".title-update").val());
+    this.model.set("isbn", $(".isbn-update").val());
+  },
+
+  done: function () {
+    booksView.render();
   },
 
   delete: function (e) {
@@ -59,14 +97,59 @@ $(document).ready(function () {
     e.preventDefault();
 
     var book = new Book({
-      author: $("#author").val(),
       title: $("#title").val(),
+      author: $("#author").val(),
+
       isbn: $("#isbn").val(),
+      url: $("#url").val().toString(),
     });
-    $("#author").val("");
+    console.log(book);
     $("#title").val("");
+    $("#author").val("");
+
     $("#isbn").val("");
+    $("#url").val("");
 
     books.add(book);
   });
+});
+
+top.addEventListener("click", (e) => {
+  var top = document.querySelector("#top");
+
+  var bottom = document.querySelector("#bottom");
+  if (e.target.innerHTML === "View Book") {
+    console.log(e.target);
+    e2 = e.target.parentElement.parentElement;
+    console.log(e2);
+    top.style.display = "none";
+    bottom.style.display = "block";
+
+    b = document.createElement("button");
+    b.setAttribute("id", "btn");
+    b.setAttribute("class", "btn btn-success");
+    b.textContent = "GO BACK";
+
+    const image = document.createElement("IMG");
+    image.setAttribute("id", "img2");
+
+    image.src = e2.querySelector("img").src;
+    console.log(image.src);
+
+    h1 = document.createElement("h1");
+    h1.setAttribute("class", "display-4");
+    h1.setAttribute("style", "text-align:center");
+    h1.innerHTML = e2.querySelector(".title").innerHTML;
+
+    bottom.appendChild(b);
+    bottom.appendChild(image);
+    bottom.appendChild(h1);
+
+    document.querySelector("#btn").addEventListener("click", (e) => {
+      if (top.style.display === "none") {
+        top.style.display = "block";
+      }
+      bottom.innerHTML = "";
+    });
+  }
 });
