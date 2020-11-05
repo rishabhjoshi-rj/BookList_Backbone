@@ -141,9 +141,21 @@ top.addEventListener("click", (e) => {
     h1.setAttribute("style", "text-align:center");
     h1.innerHTML = e2.querySelector(".title").innerHTML;
 
+    h2 = document.createElement("h1");
+    h2.setAttribute("class", "display-4");
+    h2.setAttribute("style", "text-align:center");
+    h2.innerHTML = e2.querySelector(".author").innerHTML;
+
+    h3 = document.createElement("h1");
+    h3.setAttribute("class", "display-4");
+    h3.setAttribute("style", "text-align:center");
+    h3.innerHTML = e2.querySelector(".isbn").innerHTML;
+
     bottom.appendChild(b);
     bottom.appendChild(image);
     bottom.appendChild(h1);
+    bottom.appendChild(h2);
+    bottom.appendChild(h3);
 
     document.querySelector("#btn").addEventListener("click", (e) => {
       if (top.style.display === "none") {
